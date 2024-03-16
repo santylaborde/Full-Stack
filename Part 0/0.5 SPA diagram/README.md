@@ -34,18 +34,4 @@ sequenceDiagram
 
     Note right of browser: The browser executes the callback function that renders the notes
     
-    Note left of browser: Here starts the excercise ->
-
-    Note right of browser: "My new note!"
-
-    browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
-    
-    activate server    
-    Note right of browser: "The POST request contains the new note as JSON data"
-    server-->>browser: 201 Created (URL redirect "https://studies.cs.helsinki.fi/exampleapp/notes")
-    deactivate server
-
-    Note right of browser: The browser executes the fetched JavaScript code
-    
-
 ```
