@@ -1,3 +1,4 @@
+// Elements
 const Header = (props) => {
   console.log(props)
   return (
@@ -7,19 +8,25 @@ const Header = (props) => {
   )
 }
 
+const Part = (props) => {
+  console.log("Here!")
+  console.log(props)
+  return(
+    <div>
+      <p>
+        {props.content.part} {props.content.exercises}
+      </p>
+    </div>
+  )
+}
+
 const Content = (props) => {
   console.log(props)
   return (
     <div>
-      <p>
-        {props.content[0].part} {props.content[0].exercises}
-      </p>
-      <p>
-        {props.content[1].part} {props.content[1].exercises}
-      </p>
-      <p>
-        {props.content[2].part} {props.content[2].exercises}
-      </p>
+      <Part content={props.content[0]} />
+      <Part content={props.content[1]} />
+      <Part content={props.content[2]} />
     </div>
   )
 }
@@ -33,6 +40,7 @@ const Total = (props) => {
   )
 }
 
+// Root element
 const App = () => {
   // const-definitions
   // For header
