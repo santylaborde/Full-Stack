@@ -8,25 +8,26 @@ const Header = ({title}) => {
   )
 }
 
-const Part = (props) => {
-  console.log("Here!")
-  console.log(props)
+const Part = ({content}) => {
   return(
     <div>
       <p>
-        {props.content.name} {props.content.exercises}
+        {content.name} {content.exercises}
       </p>
     </div>
   )
 }
 
-const Content = (props) => {
-  console.log(props)
+const Content = ({contents}) => {
+
   return (
     <div>
-      <Part content={props.content[0]} />
-      <Part content={props.content[1]} />
-      <Part content={props.content[2]} />
+
+      {/* Dynamic mapping of parts */}
+      { contents.map(content => 
+        <Part content={content} />                  
+      )}
+
     </div>
   )
 }
@@ -36,7 +37,7 @@ const Course = ({course}) => {
   return (
     <div>
       <Header title={course.name} />
-      <Content content={course.parts} />
+      <Content contents={course.parts} />
       {/* <Total excercise={course.parts} /> */}
     </div>
   )
