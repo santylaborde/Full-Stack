@@ -7,11 +7,7 @@ const Button = ({ handleClick, text }) => (
 )
 
 const App = () => {
-  // state variable
-  const [good, setGood] = useState(0)
-  const [neutral, setNeutral] = useState(0)
-  const [bad, setBad] = useState(0)
-  const [all, setAll] = useState(0)
+
   // anecdotes
   const [selected, setSelected] = useState(0)
   const anecdotes = [
@@ -24,28 +20,10 @@ const App = () => {
     'Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when diagnosing patients.',
     'The only way to go fast, is to go well.'
   ]
-    
   const [votes, setVotes] = useState(Array(anecdotes.length).fill(0))
 
+
   // handlers
-  const handleGoodClick = () => {
-    const updatedGood = good + 1
-    setGood(updatedGood)
-    setAll(updatedGood + neutral + bad)
-  }
-
-  const handleNeutralClick = () => {
-    const updatedNeutral = neutral + 1
-    setNeutral(updatedNeutral)
-    setAll(good + updatedNeutral + bad)
-  }
-
-  const handleBadClick = () => {
-    const updatedBad = bad + 1
-    setBad(updatedBad)
-    setAll(good + neutral + updatedBad)
-  }
-
   const handleAnecdotesClick = () => {
     const min= 0
     const max= anecdotes.length - 1
@@ -57,7 +35,7 @@ const App = () => {
 
   const handleVoteClick = () => {
     // create a copy of the matrix
-    const updatedVotes = { ...votes }
+    const updatedVotes = [ ...votes ]
     // add a vote to the selected anecdote
     updatedVotes[selected] += 1
     // update the matrix with the modified copy
@@ -66,15 +44,24 @@ const App = () => {
 
   // main
   return (
-    <div>
-      
-      <h1>Vote anecdote</h1>
+    <div>      
+      <h1>Anecdote of the day</h1>
+      {/* Show random anecdote */}
       {anecdotes[selected]}
 
+      {/* Vote or Next anecdote */}
       <br></br><br></br>
       <Button handleClick={handleVoteClick} text='Vote' />
       <Button handleClick={handleAnecdotesClick} text='Next' />
+      {/* Number of votes */}
       <p>Has {votes[selected]} votes</p>
+
+      <h1>Anecdote with most votes</h1>
+      
+      {/* Show top anecdote */}
+      {anecdotes[votes.indexOf(Math.max(...votes))]}
+      {/* Number of votes */}
+      <p>Has {Math.max(...votes)} votes</p>
 
     </div>
   )
