@@ -70,6 +70,8 @@ const App = () => {
     'Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when diagnosing patients.',
     'The only way to go fast, is to go well.'
   ]
+    
+  const [votes, setVotes] = useState(Array(anecdotes.length).fill(0))
 
   // handlers
   const handleGoodClick = () => {
@@ -95,8 +97,17 @@ const App = () => {
     const max= anecdotes.length - 1
     // random integer between 0 and 8
     const updateSelected= Math.floor(Math.random() * (max - min + 1)) + min
-
+    // update the display anecdote
     setSelected(updateSelected)
+  }
+
+  const handleVoteClick = () => {
+    // create a copy of the matrix
+    const updatedVotes = { ...votes }
+    // add a vote to the selected anecdote
+    updatedVotes[selected] += 1
+    // update the matrix with the modified copy
+    setVotes(updatedVotes)
   }
 
   // main
@@ -109,13 +120,14 @@ const App = () => {
       
       <Statistics good={good} neutral={neutral} bad={bad} all={all} />
 
-      <h1>Give anecdote</h1>
+      <h1>Vote anecdote</h1>
       {anecdotes[selected]}
 
       <br></br><br></br>
-
+      <Button handleClick={handleVoteClick} text='Vote' />
       <Button handleClick={handleAnecdotesClick} text='Next' />
-      
+      <p>Has {votes[selected]} votes</p>
+
     </div>
   )
 }
