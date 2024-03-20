@@ -6,6 +6,17 @@ const Button = ({ handleClick, text }) => (
   </button>
 )
 
+const Stadistics = ({good, neutral, bad, all}) => (
+  <div>
+    <h2>Stadistics</h2>
+    <p>Good: {good}</p>
+    <p>Neutral: {neutral}</p>
+    <p>Bad: {bad}</p>
+    <p>All: {all}</p>
+    <p>Average: { ((1)*good + (0)*neutral + (-1)*bad) / all }</p>
+    <p>Positive: { (good / all) * 100 } %</p>
+  </div>
+)
 
 const App = () => {
   // state variable
@@ -42,13 +53,7 @@ const App = () => {
       <Button handleClick={handleNeutralClick} text='Neutral' />
       <Button handleClick={handleBadClick} text='Bad' />
       
-      <h2>Stadistics</h2>
-      <p>Good: {good}</p>
-      <p>Neutral: {neutral}</p>
-      <p>Bad: {bad}</p>
-      <p>All: {all}</p>
-      <p>Average: { ((1)*good + (0)*neutral + (-1)*bad) / all }</p>
-      <p>Positive: { (good / all) * 100 } %</p>
+      <Stadistics good={good} neutral={neutral} bad={bad} all={all} />      
 
     </div>
   )
