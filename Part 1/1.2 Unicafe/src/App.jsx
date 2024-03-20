@@ -6,17 +6,32 @@ const Button = ({ handleClick, text }) => (
   </button>
 )
 
-const Stadistics = ({good, neutral, bad, all}) => (
-  <div>
-    <h2>Stadistics</h2>
-    <p>Good: {good}</p>
-    <p>Neutral: {neutral}</p>
-    <p>Bad: {bad}</p>
-    <p>All: {all}</p>
-    <p>Average: { ((1)*good + (0)*neutral + (-1)*bad) / all }</p>
-    <p>Positive: { (good / all) * 100 } %</p>
-  </div>
-)
+const Statistics = ({good, neutral, bad, all}) => {
+  
+  console.log(all)
+  if (all === 0) 
+  {
+    return(
+      <div>
+        <h2>Statistics</h2>
+          No feedback given
+      </div>
+    )    
+  }  
+
+  return(
+    <div>
+        <h2>Statistics</h2>
+        <p>Good: {good}</p>
+        <p>Neutral: {neutral}</p>
+        <p>Bad: {bad}</p>
+        <p>All: {all}</p>
+        <p>Average: { ((1)*good + (0)*neutral + (-1)*bad) / all }</p>
+        <p>Positive: { (good / all) * 100 } %</p>
+    </div>
+  )
+
+}
 
 const App = () => {
   // state variable
@@ -53,7 +68,7 @@ const App = () => {
       <Button handleClick={handleNeutralClick} text='Neutral' />
       <Button handleClick={handleBadClick} text='Bad' />
       
-      <Stadistics good={good} neutral={neutral} bad={bad} all={all} />      
+      <Statistics good={good} neutral={neutral} bad={bad} all={all} />      
 
     </div>
   )
