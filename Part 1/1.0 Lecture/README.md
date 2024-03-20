@@ -30,11 +30,11 @@ In this folder you will find the content explained during the lecture.
 - Rules of Hooks
 - Passing Event Handlers to Child Components
 
-01 Hello World
+### 01 Hello World
 We show a "hello" message using separated elements and props.
 
-02 Counter
+### 02 Counter
 We use event handler and state variable for changing the value of a counter using clicks on buttons.
 
-03 Left Right
+### 03 Left Right
 We use multiple state variables individually and as arrays. Also, conditional rendering.
