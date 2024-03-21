@@ -19,15 +19,24 @@ const App = () => {
 
     event.preventDefault() // avoids default action of submitting HTML forms
 
-    // New person object
-    const personObject = { name: newName }
-    setPersons(persons.concat(personObject)) // add new person to list of persons
-    setNewName('') // Reset the string array for new names
+    // Check new person
+    const storedNames= persons.map(person => person.name)
+    
+    if (!storedNames.includes(newName))
+    {
+      // Not yet on the phonebook
+      const personObject = { name: newName } // New person object
+      setPersons(persons.concat(personObject)) // add new person to list of persons
+      setNewName('') // Reset the string array for new names
+    }
+    else
+    {
+        alert(`${newName} is already added to phonebook`)
+    }
   }
 
   // Handler input text
   const handleNameChange = (event) => {
-    console.log(event.target.value)
     setNewName(event.target.value)
   }
 
