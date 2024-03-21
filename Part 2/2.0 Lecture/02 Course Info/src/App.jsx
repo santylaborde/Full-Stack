@@ -34,7 +34,7 @@ const Content = ({contents}) => {
 
 const Total = ({contents}) => {
   
-  const total= contents.reduce(function(sum, content) {return sum + content.exercises}, 0)
+  const total= contents.reduce((sum, content) => sum + content.exercises, 0)
   
   return (
     
