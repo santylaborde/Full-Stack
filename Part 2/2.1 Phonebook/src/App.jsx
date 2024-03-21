@@ -1,18 +1,23 @@
 import { useState } from 'react'
 
-const Person = ({ name }) => {  
+const Person = ({person}) => {  
+  
+  const { name, number } = person
+
   return (
-    <li>{name}</li>
+    <li>{name} {number}</li>
   )
 }
 
 const App = () => {
   // Persons
   const [persons, setPersons] = useState([
-    { name: 'Arto Hellas' }
+    { name: 'Arto Hellas', number: "040-1234567" }
   ]) 
   // New person
   const [newName, setNewName] = useState('')
+  // New number
+  const [newNumber, setNewNumber] = useState('')
 
   // Handler add person
   const addPerson = (event) => {
@@ -25,7 +30,7 @@ const App = () => {
     if (!storedNames.includes(newName))
     {
       // Not yet on the phonebook
-      const personObject = { name: newName } // New person object
+      const personObject = { name: newName, number: newNumber } // New person object
       setPersons(persons.concat(personObject)) // add new person to list of persons
       setNewName('') // Reset the string array for new names
     }
@@ -35,11 +40,16 @@ const App = () => {
     }
   }
 
-  // Handler input text
+  // Handler input name
   const handleNameChange = (event) => {
     setNewName(event.target.value)
   }
 
+  // Handler input name
+  const handleNumberChange = (event) => {
+    setNewNumber(event.target.value)
+  }
+  
   return (
     <div>
       {/* Title */}
@@ -50,7 +60,18 @@ const App = () => {
         
         {/* input */}
         <div>
-          name: <input value={newName} onChange={handleNameChange}/>
+          <table>
+            <tbody>
+              <tr> 
+                <td>Name: </td>
+                <td><input value={newName} onChange={handleNameChange}/></td>
+              </tr>
+              <tr> 
+                <td>Number: </td>
+                <td><input value={newNumber} onChange={handleNumberChange}/></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
 
         {/* add button */}
@@ -64,7 +85,7 @@ const App = () => {
       <h2>Numbers</h2>
       <ul>
         {persons.map(person =>
-          <Person key={person.name} name={person.name} />
+          <Person key={person.name} person={person} />
         )}
       </ul>
 
