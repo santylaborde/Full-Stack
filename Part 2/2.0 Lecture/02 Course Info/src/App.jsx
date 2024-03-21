@@ -25,10 +25,22 @@ const Content = ({contents}) => {
 
       {/* Dynamic mapping of parts */}
       { contents.map(content => 
-        <Part content={content} />                  
+        <Part key={content.id} content={content} />                  
       )}
 
     </div>
+  )
+}
+
+const Total = ({contents}) => {
+  
+  const total= contents.reduce(function(sum, content) {return sum + content.exercises}, 0)
+  
+  return (
+    
+      <div>
+        <p>Number of exercises {total}</p>    
+      </div>
   )
 }
 
@@ -38,7 +50,7 @@ const Course = ({course}) => {
     <div>
       <Header title={course.name} />
       <Content contents={course.parts} />
-      {/* <Total excercise={course.parts} /> */}
+      <Total contents={course.parts} />
     </div>
   )
 }
@@ -62,6 +74,11 @@ const App = () => {
         name: 'State of a component',
         exercises: 14,
         id: 3
+      },
+      {
+        name: 'Redux',
+        exercises: 11,
+        id: 4
       }
     ]
   }
