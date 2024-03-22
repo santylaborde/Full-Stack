@@ -12,12 +12,17 @@ const Person = ({person}) => {
 const App = () => {
   // Persons
   const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: "040-1234567" }
-  ]) 
+    { name: 'Arto Hellas', number: '040-123456', id: 1 },
+    { name: 'Ada Lovelace', number: '39-44-5323523', id: 2 },
+    { name: 'Dan Abramov', number: '12-43-234345', id: 3 },
+    { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4 }
+  ])
   // New person
   const [newName, setNewName] = useState('')
   // New number
   const [newNumber, setNewNumber] = useState('')
+  // Filter person
+  const [filteredPerson, setFilteredPerson] = useState('')
 
   // Handler add person
   const addPerson = (event) => {
@@ -33,6 +38,7 @@ const App = () => {
       const personObject = { name: newName, number: newNumber } // New person object
       setPersons(persons.concat(personObject)) // add new person to list of persons
       setNewName('') // Reset the string array for new names
+      setNewNumber('') // Reset the string array for new names
     }
     else
     {
@@ -45,19 +51,33 @@ const App = () => {
     setNewName(event.target.value)
   }
 
-  // Handler input name
+  // Handler input number
   const handleNumberChange = (event) => {
     setNewNumber(event.target.value)
   }
+
+  // Handler input filter
+  const handleFilterChange = (event) => {
+    setFilteredPerson(event.target.value)
+  }
   
+  // Filter people by input text
+  const personToShow = filteredPerson==="" ? persons : persons.filter(person => (person.name.toLowerCase()).startsWith(filteredPerson.toLowerCase()))
+
   return (
     <div>
       {/* Title */}
-      <h2>Phonebook</h2>
+      <h1>Phonebook</h1>
 
-      {/* Add name */}
-      <form onSubmit={addPerson}>
-        
+      {/* Search contact */}
+      <div>          
+        Filter shown with <input value={filteredPerson} onChange={handleFilterChange}/>
+      </div>
+
+      {/* New contact */}
+      <h2>New Contact</h2>
+
+      <form onSubmit={addPerson}>        
         {/* input */}
         <div>
           <table>
@@ -84,7 +104,8 @@ const App = () => {
       {/* Numbers */}
       <h2>Numbers</h2>
       <ul>
-        {persons.map(person =>
+        {/* Show filtered people */}
+        {personToShow.map(person =>
           <Person key={person.name} person={person} />
         )}
       </ul>
