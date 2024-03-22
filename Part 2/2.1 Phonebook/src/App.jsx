@@ -1,22 +1,11 @@
 import { useState } from 'react'
+import PersonForm from './components/Persons'
+import {Filter} from "./components/Persons"
+import {Persons} from "./components/Persons"
 
-const Person = ({person}) => {  
-  
-  const { name, number } = person
-
-  return (
-    <li>{name} {number}</li>
-  )
-}
-
-const App = () => {
+const App = (props) => {
   // Persons
-  const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '040-123456', id: 1 },
-    { name: 'Ada Lovelace', number: '39-44-5323523', id: 2 },
-    { name: 'Dan Abramov', number: '12-43-234345', id: 3 },
-    { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4 }
-  ])
+  const [persons, setPersons] = useState(props.persons)
   // New person
   const [newName, setNewName] = useState('')
   // New number
@@ -35,14 +24,14 @@ const App = () => {
     if (!storedNames.includes(newName))
     {
       // Not yet on the phonebook
-      const personObject = { name: newName, number: newNumber } // New person object
+      const personObject = { name: newName, number: newNumber, id: persons.length+1 } // New person object
       setPersons(persons.concat(personObject)) // add new person to list of persons
       setNewName('') // Reset the string array for new names
       setNewNumber('') // Reset the string array for new names
     }
     else
     {
-        alert(`${newName} is already added to phonebook`)
+      alert(`${newName} is already added to phonebook`)
     }
   }
 
@@ -70,46 +59,20 @@ const App = () => {
       <h1>Phonebook</h1>
 
       {/* Search contact */}
-      <div>          
-        Filter shown with <input value={filteredPerson} onChange={handleFilterChange}/>
-      </div>
+      <Filter filter={filteredPerson} onChange={handleFilterChange}/>      
 
       {/* New contact */}
       <h2>New Contact</h2>
 
-      <form onSubmit={addPerson}>        
-        {/* input */}
-        <div>
-          <table>
-            <tbody>
-              <tr> 
-                <td>Name: </td>
-                <td><input value={newName} onChange={handleNameChange}/></td>
-              </tr>
-              <tr> 
-                <td>Number: </td>
-                <td><input value={newNumber} onChange={handleNumberChange}/></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        {/* add button */}
-        <div>
-          <button type="submit">add</button>
-        </div>
-        
-      </form>
-
+      {/* Person form */}
+      <PersonForm onSubmit={addPerson} 
+                  name={newName} handlerName={handleNameChange} 
+                  number={newNumber} handlerNumber={handleNumberChange} />
+              
       {/* Numbers */}
       <h2>Numbers</h2>
-      <ul>
-        {/* Show filtered people */}
-        {personToShow.map(person =>
-          <Person key={person.name} person={person} />
-        )}
-      </ul>
-
+      <Persons persons={personToShow}/>
+      
     </div>
   )
 }

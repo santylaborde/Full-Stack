@@ -9,3 +9,5 @@ Prevent the user from being able to add names that already exist in the phoneboo
 Expand your application by allowing users to add phone numbers to the phone book.
 
 Implement a search field that can be used to filter the list of people by name.
+
+If you have implemented your application in a single component, refactor it by extracting suitable parts into new components. Maintain the application's state and all event handlers in the App root component.
