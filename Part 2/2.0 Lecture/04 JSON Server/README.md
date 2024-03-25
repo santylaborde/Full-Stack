@@ -20,3 +20,7 @@ Let's add a button to every note that can be used for toggling its importance.
 - Extracting Communication with the Backend into a Separate Module
 
 In the spirit of the single responsibility principle, we deem it wise to extract this communication into its own module.
+
+- Error catching
+
+The application should be able to handle these types of error situations gracefully. The more common way of adding a handler for rejected promises is to use the catch method.
