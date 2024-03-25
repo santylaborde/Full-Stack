@@ -14,3 +14,5 @@ If you have implemented your application in a single component, refactor it by e
 
 Store the initial state of the application in the file db.json
 Modify the application such that the initial state of the data is fetched from the server using the axios-library. Complete the fetching with an Effect hook.
+
+Currently, the numbers that are added to the phonebook are not saved to a backend server. Fix this situation. Extract the code that handles the communication with the backend into its own module.

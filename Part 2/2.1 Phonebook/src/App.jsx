@@ -1,9 +1,11 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Component } from 'react'
 import axios from 'axios'
-
+// Components
 import PersonForm from './components/Persons'
 import {Filter} from "./components/Persons"
 import {Persons} from "./components/Persons"
+// Communication
+import personService from './services/Persons'
 
 const App = () => {
   // Persons
@@ -17,10 +19,10 @@ const App = () => {
 
   // Get persons
   const hook = () => {
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        setPersons(response.data)
+    personService
+      .getAll()
+      .then(initialPersons => {
+        setPersons(initialPersons)
       })
   }
 
@@ -37,10 +39,16 @@ const App = () => {
     if (!storedNames.includes(newName))
     {
       // Not yet on the phonebook
-      const personObject = { name: newName, number: newNumber, id: persons.length+1 } // New person object
-      setPersons(persons.concat(personObject)) // add new person to list of persons
-      setNewName('') // Reset the string array for new names
-      setNewNumber('') // Reset the string array for new names
+      const personObject = { name: newName, number: newNumber } // New person object
+      
+      // Put new contact
+      personService
+        .create(personObject)
+        .then(returnedPerson => {
+          setPersons(persons.concat(personObject)) // add new person to list of persons
+          setNewName('') // Reset the string array for new names
+          setNewNumber('') // Reset the string array for new names
+        })
     }
     else
     {
