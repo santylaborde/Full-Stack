@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
 import Note from './components/Note'
+import noteService from './services/Notes'
 
 const App = () => {
   // stored notes
@@ -14,12 +14,12 @@ const App = () => {
 
   // Get notes
   const hook = () => {
-    axios
-      .get('http://localhost:3001/notes')
-      .then(response => {
-        setNotes(response.data)
+    noteService
+      .getAll()
+      .then(initialNotes  => {
+        setNotes(initialNotes)
       })
-  }
+    }
   
   useEffect(hook, [])
 
@@ -33,14 +33,24 @@ const App = () => {
       // id: notes.length + 1,  // server will create the "id" for us
     }
 
-    axios
-      .post('http://localhost:3001/notes', noteObject)
-      .then(response => {
-        // Add the new note
-        setNotes(notes.concat(response.data))
-        // Reset the string array for new notes
+    noteService
+      .create(noteObject)
+      .then(returnedNote => {
+        setNotes(notes.concat(returnedNote))
         setNewNote('')
-      })    
+      })
+  }
+
+  // handler importance
+  const toggleImportanceOf = id => {
+    const note = notes.find(n => n.id === id)
+    const changedNote = { ...note, important: !note.important }
+  
+    noteService
+      .update(id, changedNote)
+      .then(returnedNote => {
+        setNotes(notes.map(note => note.id !== id ? note : returnedNote))
+      })
   }
 
   // handler input text
@@ -68,7 +78,7 @@ const App = () => {
       {/* Displayed Notes */}
       <ul>
         {notesToShow.map(note =>
-          <Note key={note.id} note={note} />
+          <Note key={note.id} note={note} toggleImportance={() => toggleImportanceOf(note.id)}/>
         )}
       </ul>
 
