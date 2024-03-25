@@ -14,11 +14,9 @@ const App = () => {
 
   // Get notes
   const hook = () => {
-    console.log('effect')
     axios
       .get('http://localhost:3001/notes')
       .then(response => {
-        console.log('promise fulfilled')
         setNotes(response.data)
       })
   }
@@ -27,24 +25,26 @@ const App = () => {
 
   // handler button
   const addNote = (event) => {
-    event.preventDefault()
 
     event.preventDefault()
     const noteObject = {
       content: newNote,
       important: Math.random() < 0.5,
-      id: notes.length + 1,
+      // id: notes.length + 1,  // server will create the "id" for us
     }
-    
-    // Add the new note
-    setNotes(notes.concat(noteObject))
-    // Reset the string array for new notes
-    setNewNote('')
+
+    axios
+      .post('http://localhost:3001/notes', noteObject)
+      .then(response => {
+        // Add the new note
+        setNotes(notes.concat(response.data))
+        // Reset the string array for new notes
+        setNewNote('')
+      })    
   }
 
   // handler input text
   const handleNoteChange = (event) => {
-    console.log(event.target.value)
     setNewNote(event.target.value)
   }
 
