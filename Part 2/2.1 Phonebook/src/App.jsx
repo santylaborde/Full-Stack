@@ -1,9 +1,6 @@
-import { useState, useEffect, Component } from 'react'
-import axios from 'axios'
+import { useState, useEffect } from 'react'
 // Components
-import PersonForm from './components/Persons'
-import {Filter} from "./components/Persons"
-import {Persons} from "./components/Persons"
+import personComponent from './components/Persons'
 // Communication
 import personService from './services/Persons'
 
@@ -45,7 +42,7 @@ const App = () => {
       personService
         .create(personObject)
         .then(returnedPerson => {
-          setPersons(persons.concat(personObject)) // add new person to list of persons
+          setPersons(persons.concat(returnedPerson)) // add new person to list of persons
           setNewName('') // Reset the string array for new names
           setNewNumber('') // Reset the string array for new names
         })
@@ -54,6 +51,28 @@ const App = () => {
     {
       alert(`${newName} is already added to phonebook`)
     }
+  }
+
+  // Handler delete person
+  const deletePerson = id => {
+    
+    // Identifying person by id
+    const arrayHasID= persons.map(person => person.id === id)
+    const indexOfID= arrayHasID.indexOf(true)
+
+    if (window.confirm("Delete " + persons[indexOfID].name +" ?")) {
+      // Remove new contact
+      personService
+      .remove(id)
+      .then(returnedPerson => {
+        // My way
+        // const updatedPersons= persons.slice(0,indexOfID).concat(persons.slice(indexOfID+1, persons.length))
+        // Stack overflow way
+        const updatedPersons= persons.filter(person => person.id !== id)
+        setPersons(updatedPersons) // add new person to list of persons
+        console.log("Successfully delete " + returnedPerson.name);
+      })
+    } 
   }
 
   // Handler input name
@@ -80,19 +99,19 @@ const App = () => {
       <h1>Phonebook</h1>
 
       {/* Search contact */}
-      <Filter filter={filteredPerson} onChange={handleFilterChange}/>      
+      <personComponent.Filter filter={filteredPerson} onChange={handleFilterChange}/>      
 
       {/* New contact */}
       <h2>New Contact</h2>
 
       {/* Person form */}
-      <PersonForm onSubmit={addPerson} 
+      <personComponent.PersonForm onSubmit={addPerson} 
                   name={newName} handlerName={handleNameChange} 
                   number={newNumber} handlerNumber={handleNumberChange} />
               
       {/* Numbers */}
       <h2>Numbers</h2>
-      <Persons persons={personToShow}/>
+      <personComponent.Persons persons={personToShow} handler={deletePerson}/>
       
     </div>
   )
