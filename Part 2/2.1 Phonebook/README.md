@@ -18,3 +18,5 @@ Modify the application such that the initial state of the data is fetched from t
 Currently, the numbers that are added to the phonebook are not saved to a backend server. Fix this situation. Extract the code that handles the communication with the backend into its own module.
 
 Make it possible for users to delete entries from the phonebook. The deletion can be done through a dedicated button for each person in the phonebook list. You can confirm the action from the user by using the window.confirm method.
+
+Change the functionality so that if a number is added to an already existing user, the new number will replace the old number. It's recommended to use the HTTP PUT method for updating the phone number. If the person's information is already in the phonebook, the application can ask the user to confirm the action

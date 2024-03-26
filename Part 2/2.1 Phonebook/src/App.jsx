@@ -31,9 +31,9 @@ const App = () => {
     event.preventDefault() // avoids default action of submitting HTML forms
 
     // Check new person
-    const storedNames= persons.map(person => person.name)
+    const newPerson = persons.find(p => p.name === newName)
     
-    if (!storedNames.includes(newName))
+    if (!newPerson)
     {
       // Not yet on the phonebook
       const personObject = { name: newName, number: newNumber } // New person object
@@ -49,7 +49,23 @@ const App = () => {
     }
     else
     {
-      alert(`${newName} is already added to phonebook`)
+      if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`))
+      {
+        // Copy of the people list with updated phones
+        const changedPerson = { ...newPerson, number: newNumber }
+
+        personService
+          .update(changedPerson)
+          .then(returnedPerson => {
+            setPersons(persons.map(person => person.name === newName ? returnedPerson : person))
+          })
+          .catch(error => {
+            alert(
+              `'${newName}' was already deleted from server`
+            )
+            setPersons(persons.filter(n => n.name !== newName))
+          })
+      }
     }
   }
 
@@ -60,16 +76,13 @@ const App = () => {
     const arrayHasID= persons.map(person => person.id === id)
     const indexOfID= arrayHasID.indexOf(true)
 
-    if (window.confirm("Delete " + persons[indexOfID].name +" ?")) {
+    if (window.confirm("Delete " + persons[indexOfID].name +"?")) {
       // Remove new contact
       personService
       .remove(id)
       .then(returnedPerson => {
-        // My way
-        // const updatedPersons= persons.slice(0,indexOfID).concat(persons.slice(indexOfID+1, persons.length))
-        // Stack overflow way
-        const updatedPersons= persons.filter(person => person.id !== id)
-        setPersons(updatedPersons) // add new person to list of persons
+        const updatedPersons= persons.filter(person => person.id !== id) // Copy array but without the deleted person
+        setPersons(updatedPersons) // set the new list of persons
         console.log("Successfully delete " + returnedPerson.name);
       })
     } 
