@@ -24,3 +24,28 @@ In the spirit of the single responsibility principle, we deem it wise to extract
 - Error catching
 
 The application should be able to handle these types of error situations gracefully. The more common way of adding a handler for rejected promises is to use the catch method.
+
+
+### Adding style
+
+#### Adding CSS file
+First, we will add CSS to our application the old-school way; in a single file without using a CSS preprocessor.
+
+#### Improved error message: 
+Let's implement the error message as its own React component.
+
+#### Inline styles:
+Inline styles and some of the other ways of adding styles to React components go completely against the grain of old conventions. 
+
+Traditionally, separated CSS from the content (HTML) and functionality (JavaScript). 
+
+The goal was to write CSS, HTML, and JavaScript into their separate files.
+
+The philosophy of React is, in fact, the polar opposite of this.
+
+Now a React component:
+- Defines the HTML for structuring the content
+- The JavaScript functions for determining functionality
+- The component's styling
+
+This is to create individual components that are as independent and reusable as possible.
