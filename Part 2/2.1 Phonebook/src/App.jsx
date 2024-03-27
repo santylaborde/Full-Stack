@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react'
 // Components
 import personComponent from './components/Persons'
+import Notification from './components/Notifications'
 // Communication
 import personService from './services/Persons'
 
 const App = () => {
+  /*** STATE VARIABLES ***/
   // Persons
   const [persons, setPersons] = useState([])
   // New person
@@ -13,7 +15,10 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
   // Filter person
   const [filteredPerson, setFilteredPerson] = useState('')
+  // error message
+  const [Message, setMessage] = useState('')
 
+  /*** SERVICES ***/
   // Get persons
   const hook = () => {
     personService
@@ -25,7 +30,8 @@ const App = () => {
 
   useEffect(hook, [])
 
-  // Handler add person
+  /*** HANDLERS ***/
+  // Add person
   const addPerson = (event) => {
 
     event.preventDefault() // avoids default action of submitting HTML forms
@@ -42,6 +48,10 @@ const App = () => {
       personService
         .create(personObject)
         .then(returnedPerson => {
+          // Notification
+          setMessage(`Added '${returnedPerson.name}'`)
+          setTimeout(() => { setMessage(null) }, 5000)
+          
           setPersons(persons.concat(returnedPerson)) // add new person to list of persons
           setNewName('') // Reset the string array for new names
           setNewNumber('') // Reset the string array for new names
@@ -57,6 +67,10 @@ const App = () => {
         personService
           .update(changedPerson)
           .then(returnedPerson => {
+            // Notification
+            setMessage(`Updated '${returnedPerson.name}'`)
+            setTimeout(() => { setMessage(null) }, 5000)
+
             setPersons(persons.map(person => person.name === newName ? returnedPerson : person))
           })
           .catch(error => {
@@ -69,7 +83,7 @@ const App = () => {
     }
   }
 
-  // Handler delete person
+  // Delete person
   const deletePerson = id => {
     
     // Identifying person by id
@@ -88,17 +102,17 @@ const App = () => {
     } 
   }
 
-  // Handler input name
+  // Input name
   const handleNameChange = (event) => {
     setNewName(event.target.value)
   }
 
-  // Handler input number
+  // Input number
   const handleNumberChange = (event) => {
     setNewNumber(event.target.value)
   }
 
-  // Handler input filter
+  // Input filter
   const handleFilterChange = (event) => {
     setFilteredPerson(event.target.value)
   }
@@ -106,10 +120,12 @@ const App = () => {
   // Filter people by input text
   const personToShow = filteredPerson==="" ? persons : persons.filter(person => (person.name.toLowerCase()).startsWith(filteredPerson.toLowerCase()))
 
+  /*** MAIN ***/
   return (
     <div>
       {/* Title */}
       <h1>Phonebook</h1>
+      <Notification message={Message} />
 
       {/* Search contact */}
       <personComponent.Filter filter={filteredPerson} onChange={handleFilterChange}/>      
