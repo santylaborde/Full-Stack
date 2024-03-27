@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react'
 import Note from './components/Note'
+import Notification from './components/Notificaction'
 import noteService from './services/Notes'
 
 const App = () => {
+  /* STATE VARIABLES */
   // stored notes
   const [notes, setNotes] = useState([])
   // new note
@@ -11,6 +13,8 @@ const App = () => {
   )
   // displayed notes
   const [showAll, setShowAll] = useState(true)
+  // error message
+  const [errorMessage, setErrorMessage] = useState('some error happened...')
 
   // Get notes
   const hook = () => {
@@ -52,9 +56,9 @@ const App = () => {
         setNotes(notes.map(note => note.id !== id ? note : returnedNote))
       })
       .catch(error => {
-        alert(
-          `the note '${note.content}' was already deleted from server`
-        )
+        console.log();
+        setErrorMessage(`Note '${note.content}' was already removed from server`)
+        setTimeout(() => { setErrorMessage(null) }, 5000)
         setNotes(notes.filter(n => n.id !== id))
       })
   }
@@ -73,6 +77,7 @@ const App = () => {
     <div>
       {/* Title */}
       <h1>Notes</h1>
+      <Notification message={errorMessage} />
       
       {/* Toggle Filter */}
       <div>
