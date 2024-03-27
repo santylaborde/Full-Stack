@@ -22,3 +22,5 @@ Make it possible for users to delete entries from the phonebook. The deletion ca
 Change the functionality so that if a number is added to an already existing user, the new number will replace the old number. It's recommended to use the HTTP PUT method for updating the phone number. If the person's information is already in the phonebook, the application can ask the user to confirm the action
 
 Use the improved error message example from part 2 as a guide to show a notification that lasts for a few seconds after a successful operation is executed (a person is added or a number is changed)
+
+ The unsuccessful message is shown to the user when the operation does not succeed.

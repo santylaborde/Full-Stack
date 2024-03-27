@@ -16,7 +16,7 @@ const App = () => {
   // Filter person
   const [filteredPerson, setFilteredPerson] = useState('')
   // error message
-  const [Message, setMessage] = useState('')
+  const [Message, setMessage] = useState({content: null, status:""})
 
   /*** SERVICES ***/
   // Get persons
@@ -49,8 +49,8 @@ const App = () => {
         .create(personObject)
         .then(returnedPerson => {
           // Notification
-          setMessage(`Added '${returnedPerson.name}'`)
-          setTimeout(() => { setMessage(null) }, 5000)
+          setMessage({content: `Added '${returnedPerson.name}'`, status:"success"})
+          setTimeout(() => { setMessage({content: null, status:""}) }, 5000)
           
           setPersons(persons.concat(returnedPerson)) // add new person to list of persons
           setNewName('') // Reset the string array for new names
@@ -68,15 +68,16 @@ const App = () => {
           .update(changedPerson)
           .then(returnedPerson => {
             // Notification
-            setMessage(`Updated '${returnedPerson.name}'`)
-            setTimeout(() => { setMessage(null) }, 5000)
+            setMessage({content: `Updated '${returnedPerson.name}'`, status:"success"})
+            setTimeout(() => { setMessage({content: null, status:""}) }, 5000)
 
             setPersons(persons.map(person => person.name === newName ? returnedPerson : person))
           })
           .catch(error => {
-            alert(
-              `'${newName}' was already deleted from server`
-            )
+            // Notification
+            setMessage({content: `Information of '${newPerson.name}' has already been removed from server`, status:"error"})
+            setTimeout(() => { setMessage({content: null, status:""}) }, 5000)
+
             setPersons(persons.filter(n => n.name !== newName))
           })
       }
@@ -87,14 +88,17 @@ const App = () => {
   const deletePerson = id => {
     
     // Identifying person by id
-    const arrayHasID= persons.map(person => person.id === id)
-    const indexOfID= arrayHasID.indexOf(true)
+    const toDelete= persons.find(p => p.id === id)
 
-    if (window.confirm("Delete " + persons[indexOfID].name +"?")) {
+    if (window.confirm("Delete " + toDelete.name +"?")) {
       // Remove new contact
       personService
       .remove(id)
       .then(returnedPerson => {
+        // Notification
+        setMessage({content: `Deleted '${returnedPerson.name}'`, status:"success"})
+        setTimeout(() => { setMessage({content: null, status:""}) }, 5000)
+
         const updatedPersons= persons.filter(person => person.id !== id) // Copy array but without the deleted person
         setPersons(updatedPersons) // set the new list of persons
         console.log("Successfully delete " + returnedPerson.name);
@@ -125,7 +129,7 @@ const App = () => {
     <div>
       {/* Title */}
       <h1>Phonebook</h1>
-      <Notification message={Message} />
+      <Notification message={Message}/>
 
       {/* Search contact */}
       <personComponent.Filter filter={filteredPerson} onChange={handleFilterChange}/>      

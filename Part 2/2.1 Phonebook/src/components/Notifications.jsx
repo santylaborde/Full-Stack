@@ -1,7 +1,14 @@
 const Notification = ({ message }) => {
 
-    const successStyle = {
-        color: 'green',
+    const {content, status}= message
+
+    const nullStyle = {        
+        color: 'white',
+        background: 'white'
+    }
+
+    const Style = {        
+        color: status=="success" ? 'green' : 'red', 
         background: 'lightgrey',
         fontSize: '20px',
         borderStyle: 'solid',
@@ -10,26 +17,20 @@ const Notification = ({ message }) => {
         marginBottom: '10px'
     }
 
-    const erroStyle = {        
-        color: 'red',
-        background: 'lightgrey',
-        fontSize: '20px',
-        borderStyle: 'solid',
-        borderRadius: '5px',
-        padding: '10px',
-        marginBottom: '10px'
+    if (content) {
+        return (            
+            <div style= {Style} >
+                {content}
+            </div>
+        )
     }
-
-
-    if (message === null) {
-        return null
+    else{
+        return (            
+            <div style= {nullStyle} >
+            </div>
+        )
     }
-
-    return (
-        <div style={successStyle}>
-        {message}
-        </div>
-    )
+    
 }
 
 export default Notification
