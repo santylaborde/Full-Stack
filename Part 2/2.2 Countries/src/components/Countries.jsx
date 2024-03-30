@@ -10,10 +10,10 @@ const Filter = ({filter, onChange}) => {
 }
 
 // Country component
-const Country = ({country}) => {  
+const Country = ({country, onClick}) => {  
   
   return (
-    <li>{country.name.common}</li>
+    <li>{country.name.common} <button onClick={onClick}>show</button> </li>
   )
 }
 
@@ -37,7 +37,7 @@ const CountryInformation = ({country}) => {
             </tr>
             <tr>
               <td> <u> Languages: </u> </td>
-              <td> <ul> { languages.map(language => <li>{language} </li>) } </ul> </td>              
+              <td> <ul> { languages.map(language => <li key={language}>{language} </li>) } </ul> </td>              
             </tr>              
         </tbody>
       </table>
@@ -49,7 +49,7 @@ const CountryInformation = ({country}) => {
 }
 
 // Countries component
-const Countries = ({countries}) => {
+const Countries = ({countries, handler}) => {
   
   if(countries.length > 1 && countries.length < 10)
   {
@@ -58,7 +58,7 @@ const Countries = ({countries}) => {
         {/* Show filtered countries */}
         <ul>
           {countries.map(country =>
-            <Country key={country.name.official} country={country}/>
+            <Country key={country.name.official} country={country} onClick={() => handler(country.name.common)} />
           )}
         </ul>
       </div>
@@ -71,12 +71,19 @@ const Countries = ({countries}) => {
   }
   else
   {
+    let message= "Loading countries, please wait..."
+    
+    if(countries.length)
+    {
+      message= "Too many matches, specify another filter"
+    }
+
     return(
     <div>
-      <p>Too many matches, specify another filter</p>
+      <p>{message}</p>
     </div>
     )
   }
 }
 
-export default { Filter, Countries}
+export default { Filter, Countries, CountryInformation}

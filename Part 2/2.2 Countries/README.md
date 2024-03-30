@@ -12,3 +12,5 @@ If there are ten or fewer countries, but more than one, then all countries match
 When there is only one country matching the query, then the basic data of the country (eg. capital and area), its flag and the languages spoken are shown.
 
 NB: It is enough that your application works for most countries. Some countries, like Sudan, can be hard to support since the name of the country is part of the name of another country, South Sudan. You don't need to worry about these edge cases.
+
+Improve on the application in the previous exercise, such that when the names of multiple countries are shown on the page there is a button next to the name of the country, which when pressed shows the view for that country.

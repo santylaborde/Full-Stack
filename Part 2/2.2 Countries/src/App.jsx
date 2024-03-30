@@ -27,6 +27,10 @@ const App = () => {
   const handleFilterChange = (event) => {
     setfilteredCountry(event.target.value)
   }
+
+  const showInfo = country => {
+    setfilteredCountry(country)
+  }
   
   // Filter people by input text
   const countryToShow = filteredCountry==="" ? countries : countries.filter(country => (country.name.common.toLowerCase()).includes(filteredCountry.toLowerCase()))
@@ -39,7 +43,7 @@ const App = () => {
 
       {/* Search country */}
       <countryComponent.Filter filter={filteredCountry} onChange={handleFilterChange}/>
-      <countryComponent.Countries countries={countryToShow}/>
+      <countryComponent.Countries countries={countryToShow} handler={showInfo}/>
       
     </div>
   )
