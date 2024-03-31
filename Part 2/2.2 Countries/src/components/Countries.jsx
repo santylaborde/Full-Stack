@@ -1,4 +1,8 @@
-import { Component } from "react"
+import { Component, useState, useEffect } from 'react'
+// Components
+import weatherComponent from '../components/Weather'
+// Communication
+import weatherService from '../services/Weather'
 
 // Filter component
 const Filter = ({filter, onChange}) => {
@@ -20,6 +24,19 @@ const Country = ({country, onClick}) => {
 // Country Information component
 const CountryInformation = ({country}) => {  
   
+  const [weather, setWeather] = useState([])
+
+  // Get countries
+  const hook = () => {
+  weatherService
+    .getWeather(country)
+    .then(returnedWeather => {
+      setWeather(returnedWeather)
+    })
+  }
+
+  useEffect(hook, [])
+
   const languages= (Object.keys(country[0].languages)).map(key => country[0].languages[key])
 
   return (
@@ -38,11 +55,14 @@ const CountryInformation = ({country}) => {
             <tr>
               <td> <u> Languages: </u> </td>
               <td> <ul> { languages.map(language => <li key={language}>{language} </li>) } </ul> </td>              
-            </tr>              
+            </tr>                    
         </tbody>
       </table>
 
-      <img src={country[0].flags.png} alt={country[0].flags.alt} />
+      <img width="100" src={country[0].flags.png} alt={country[0].flags.alt } />
+
+      <h3>Weather in {country[0].capital}</h3>
+      <weatherComponent.weather weather={weather}/>      
 
     </div>
   )
