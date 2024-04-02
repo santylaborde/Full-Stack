@@ -28,6 +28,13 @@ let persons= [
 // json-parser
 app.use(express.json())
 
+// id generator
+const generateId = () => {
+  const max= 10000
+  const randId = Math.floor(Math.random() * max);
+  return randId
+}
+
 /*** API ***/
 // get all
 app.get('/api/persons', (request, response) => {
@@ -58,6 +65,20 @@ app.delete('/api/persons/:id', (request, response) => {
   persons = persons.filter(person => person.id !== id)
 
   response.status(204).end()
+})
+
+// create
+app.post('/api/persons', (request, response) => {
+  const body = request.body
+
+  const newPerson = {
+    name: body.name,
+    number: body.number,
+    id: generateId(),
+  }
+
+  persons = persons.concat(newPerson)
+  response.json(newPerson)
 })
 
 /*** MAIN ***/
