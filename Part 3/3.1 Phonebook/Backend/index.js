@@ -71,14 +71,30 @@ app.delete('/api/persons/:id', (request, response) => {
 app.post('/api/persons', (request, response) => {
   const body = request.body
 
-  const newPerson = {
-    name: body.name,
-    number: body.number,
-    id: generateId(),
+  // Check empty information
+  if (!body.name || !body.number) {
+    return response.status(400).json({ 
+      error: 'name or number missing' 
+    })
   }
 
-  persons = persons.concat(newPerson)
-  response.json(newPerson)
+  // Check duplicated person    
+  if (!persons.find(p => p.name === body.name)) {
+    // Not yet on the phonebook
+    const newPerson = {
+      name: body.name,
+      number: body.number,
+      id: generateId(),
+    }
+
+    persons = persons.concat(newPerson)
+    response.json(newPerson)
+  }
+  else {
+    return response.status(400).json({ 
+      error: 'name is duplicated' 
+    })
+  }
 })
 
 /*** MAIN ***/

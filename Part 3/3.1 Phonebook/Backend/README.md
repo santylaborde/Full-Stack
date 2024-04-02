@@ -21,3 +21,7 @@ Expand the backend so that new phonebook entries can be added by making HTTP POS
 > http://localhost:3001/api/persons
 
 Generate a new id for the phonebook entry with the Math.random function. Use a big enough range for your random values so that the likelihood of creating duplicate ids is small.
+
+Implement error handling for creating new entries. The request is not allowed to succeed, if:
+- The name or number is missing
+- The name already exists in the phonebook
