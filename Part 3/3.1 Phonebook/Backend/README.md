@@ -25,3 +25,5 @@ Generate a new id for the phonebook entry with the Math.random function. Use a b
 Implement error handling for creating new entries. The request is not allowed to succeed, if:
 - The name or number is missing
 - The name already exists in the phonebook
+
+Add the morgan middleware to your application for logging. Configure it to log messages to your console based on the tiny configuration.

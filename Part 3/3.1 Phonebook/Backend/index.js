@@ -24,10 +24,15 @@ let persons= [
     }
 ]
 
-/*** FUNCTIONS ***/
+/*** MIDDLEWARE ***/
 // json-parser
 app.use(express.json())
+// morgan
+var morgan = require('morgan')
+app.use(morgan('tiny'))
 
+
+/*** FUNCTIONS ***/
 // id generator
 const generateId = () => {
   const max= 10000
