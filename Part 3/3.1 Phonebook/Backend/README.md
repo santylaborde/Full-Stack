@@ -11,3 +11,5 @@ The page has to show the time that the request was received and how many entries
 Implement the functionality for displaying the information for a single phonebook entry. The url for getting the data for a person with the id 5 should be http://localhost:3001/api/persons/5
 
 If an entry for the given id is not found, the server has to respond with the appropriate status code.
+
+Implement functionality that makes it possible to delete a single phonebook entry by making an HTTP DELETE request to the unique URL of that phonebook entry.
