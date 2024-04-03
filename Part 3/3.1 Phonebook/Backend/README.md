@@ -27,3 +27,5 @@ Implement error handling for creating new entries. The request is not allowed to
 - The name already exists in the phonebook
 
 Add the morgan middleware to your application for logging. Configure it to log messages to your console based on the tiny configuration.
+
+Configure morgan so that it also shows the data sent in HTTP POST requests.

@@ -29,8 +29,11 @@ let persons= [
 app.use(express.json())
 // morgan
 var morgan = require('morgan')
-app.use(morgan('tiny'))
-
+// tiny morgan
+// app.use(morgan('tiny'))
+// custom morgan
+morgan.token('body', (req, res) => JSON.stringify(req.body));
+app.use(morgan(':method :url :status :req[content-length] - :response-time ms :body'))
 
 /*** FUNCTIONS ***/
 // id generator
@@ -78,6 +81,9 @@ app.post('/api/persons', (request, response) => {
 
   // Check empty information
   if (!body.name || !body.number) {
+    
+    console.log("name or number missing");
+
     return response.status(400).json({ 
       error: 'name or number missing' 
     })
@@ -91,11 +97,13 @@ app.post('/api/persons', (request, response) => {
       number: body.number,
       id: generateId(),
     }
-
+    
+    console.log(`Adding ${newPerson.name}`);
     persons = persons.concat(newPerson)
     response.json(newPerson)
   }
   else {
+    console.log("name is duplicated");
     return response.status(400).json({ 
       error: 'name is duplicated' 
     })
