@@ -37,6 +37,8 @@ app.use(morgan(':method :url :status :req[content-length] - :response-time ms :b
 // same origin policy 
 const cors = require('cors')
 app.use(cors())
+// prod frontend
+app.use(express.static('dist'))
 
 /*** FUNCTIONS ***/
 // id generator
@@ -114,7 +116,7 @@ app.post('/api/persons', (request, response) => {
 })
 
 /*** MAIN ***/
-const PORT = 3001
+const PORT= process.env.PORT || 3001
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
 })

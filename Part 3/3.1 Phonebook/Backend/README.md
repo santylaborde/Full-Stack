@@ -38,3 +38,5 @@ Make the backend work with the phonebook frontend from the exercises of the prev
 
 Deploy the backend to the internet. I will use Render.
 Test the deployed backend with a browser and Postman or VS Code REST client to ensure it works.
+
+Generate a production build of your frontend, and add it to the Internet application using the method introduced in this part.
