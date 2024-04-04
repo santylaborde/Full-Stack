@@ -34,6 +34,9 @@ var morgan = require('morgan')
 // custom morgan
 morgan.token('body', (req, res) => JSON.stringify(req.body));
 app.use(morgan(':method :url :status :req[content-length] - :response-time ms :body'))
+// same origin policy
+const cors = require('cors')
+app.use(cors())
 
 /*** FUNCTIONS ***/
 // id generator

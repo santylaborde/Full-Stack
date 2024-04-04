@@ -29,3 +29,5 @@ Implement error handling for creating new entries. The request is not allowed to
 Add the morgan middleware to your application for logging. Configure it to log messages to your console based on the tiny configuration.
 
 Configure morgan so that it also shows the data sent in HTTP POST requests.
+
+Make the backend work with the phonebook frontend from the exercises of the previous part.
