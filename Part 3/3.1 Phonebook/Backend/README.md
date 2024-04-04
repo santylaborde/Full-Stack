@@ -1,5 +1,9 @@
 # Phonebook Backend
 
+* **RENDER URL**: https://zero2-phonebook.onrender.com/api/persons
+
+
+### Tasks
 Implement a Node application that returns a hardcoded list of phonebook entries from the address 
 > http://localhost:3001/api/persons
 
@@ -31,3 +35,6 @@ Add the morgan middleware to your application for logging. Configure it to log m
 Configure morgan so that it also shows the data sent in HTTP POST requests.
 
 Make the backend work with the phonebook frontend from the exercises of the previous part.
+
+Deploy the backend to the internet. I will use Render.
+Test the deployed backend with a browser and Postman or VS Code REST client to ensure it works.
