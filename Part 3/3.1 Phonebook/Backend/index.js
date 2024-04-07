@@ -78,15 +78,15 @@ app.post('/api/persons', (request, response) => {
   // Check duplicated person    
   if (!persons.find(p => p.name === body.name)) {
     // Not yet on the phonebook
-    const newPerson = {
+    const newPerson = new Person({
       name: body.name,
       number: body.number,
-      id: generateId(),
-    }
+    })
     
     console.log(`Adding ${newPerson.name}`);
-    persons = persons.concat(newPerson)
-    response.json(newPerson)
+    newPerson.save().then(savedPerson => {
+      response.json(savedPerson)
+    })
   }
   else {
     console.log("name is duplicated");
