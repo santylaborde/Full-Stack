@@ -1,36 +1,10 @@
+require('dotenv').config() // environment variables
 const express = require('express')
 const app = express()
 
+const Note = require('./models/note') // mongo db
+
 let notes = []
-
-/*** MONGO DB ***/
-const mongoose = require('mongoose')
-
-const password = process.argv[2]
-const appDB = "noteApp"
-const url =
-  `mongodb+srv://slaborde:${password}@fullstackopen.1mv6ak9.mongodb.net/${appDB}?retryWrites=true&w=majority&appName=FullStackOpen`
-
-mongoose.set('strictQuery',false)
-mongoose.connect(url)
-
-// Schema define
-const noteSchema = new mongoose.Schema({
-  content: String,
-  important: Boolean,
-})
-
-// Schema transform
-noteSchema.set('toJSON', {
-  transform: (document, returnedObject) => {
-    returnedObject.id = returnedObject._id.toString()
-    delete returnedObject._id
-    delete returnedObject.__v
-  }
-})
-
-const Note = mongoose.model('Note', noteSchema)
-
 
 /*** MIDDLEWARES ***/
 const requestLogger = (request, response, next) => {
