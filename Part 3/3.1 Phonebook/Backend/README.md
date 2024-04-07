@@ -40,3 +40,6 @@ Deploy the backend to the internet. I will use Render.
 Test the deployed backend with a browser and Postman or VS Code REST client to ensure it works.
 
 Generate a production build of your frontend, and add it to the Internet application using the method introduced in this part.
+
+Create a cloud-based MongoDB database for the phonebook application with MongoDB Atlas.
+Create a mongo.js file in the project directory, that can be used for adding entries to the phonebook, and for listing all of the existing entries in the phonebook.
