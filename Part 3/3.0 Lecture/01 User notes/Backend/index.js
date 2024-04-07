@@ -64,10 +64,11 @@ app.get('/api/notes/:id', (request, response, next) => {
 
 // delete
 app.delete('/api/notes/:id', (request, response) => {
-    const id = Number(request.params.id)
-    notes = notes.filter(note => note.id !== id)
-  
+  Note.findByIdAndDelete(request.params.id)
+  .then(result => {
     response.status(204).end()
+  })
+  .catch(error => next(error))
 })
 
 // create
@@ -87,6 +88,23 @@ app.post('/api/notes', (request, response) => {
   note.save().then(savedNote => {
     response.json(savedNote)
   })
+})
+
+// update
+app.put('/api/notes/:id', (request, response, next) => {
+  const body = request.body
+
+  // a regular JavaScript object
+  const note = {
+    content: body.content,
+    important: body.important,
+  }
+
+  Note.findByIdAndUpdate(request.params.id, note, { new: true })
+    .then(updatedNote => {
+      response.json(updatedNote)
+    })
+    .catch(error => next(error))
 })
 
 // handler of requests with unknown endpoint
