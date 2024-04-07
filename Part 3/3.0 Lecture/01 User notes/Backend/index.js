@@ -1,31 +1,42 @@
 const express = require('express')
 const app = express()
 
-let notes = [
-  {
-    id: 1,
-    content: "HTML is easy",
-    important: true
-  },
-  {
-    id: 2,
-    content: "Browser can execute only JavaScript",
-    important: false
-  },
-  {
-    id: 3,
-    content: "GET and POST are the most important methods of HTTP protocol",
-    important: true
+let notes = []
+
+/*** MONGO DB ***/
+const mongoose = require('mongoose')
+
+const password = process.argv[2]
+const appDB = "noteApp"
+const url =
+  `mongodb+srv://slaborde:${password}@fullstackopen.1mv6ak9.mongodb.net/${appDB}?retryWrites=true&w=majority&appName=FullStackOpen`
+
+mongoose.set('strictQuery',false)
+mongoose.connect(url)
+
+// Schema define
+const noteSchema = new mongoose.Schema({
+  content: String,
+  important: Boolean,
+})
+
+// Schema transform
+noteSchema.set('toJSON', {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id.toString()
+    delete returnedObject._id
+    delete returnedObject.__v
   }
-]
+})
+
+const Note = mongoose.model('Note', noteSchema)
+
 
 /*** MIDDLEWARES ***/
 const requestLogger = (request, response, next) => {
   console.log('Method:', request.method)
   console.log('Path:  ', request.path)
   console.log('Body:  ', request.body)
-  console.log('Status:  ', request.status)
-  console.log(request);
   console.log('---')
   next()
 }
@@ -56,7 +67,9 @@ app.get('/', (request, response) => {
 /*** API ***/
 // get all
 app.get('/api/notes', (request, response) => {
+  Note.find({}).then(notes => {
     response.json(notes)
+  })
 })
 
 // get singular
