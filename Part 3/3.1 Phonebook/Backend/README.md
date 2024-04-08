@@ -51,3 +51,5 @@ Change the backend so that new numbers are saved to the database.
 Change the backend so that deleting phonebook entries is reflected in the database.
 
 Move the error handling of the application to a new error handler middleware.
+
+If the user tries to create a new phonebook entry for a person whose name is already in the phonebook, the frontend will try to update the phone number of the existing entry by making an HTTP PUT request to the entry's unique URL.
