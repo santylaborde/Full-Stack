@@ -56,6 +56,12 @@ const App = () => {
           setNewName('') // Reset the string array for new names
           setNewNumber('') // Reset the string array for new names
         })
+        .catch(error => {
+          console.log(error.response.data.error)
+          // Notification
+          setMessage({content: error.response.data.error, status:"error"})
+          setTimeout(() => { setMessage({content: null, status:""}) }, 5000)          
+        })
     }
     else
     {
