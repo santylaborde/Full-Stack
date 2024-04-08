@@ -46,4 +46,6 @@ Create a mongo.js file in the project directory, that can be used for adding ent
 
 Change the fetching of all phonebook entries so that the data is fetched from the database.
 
-Change the backend so that new numbers are saved to the database. Verify that your frontend still works after the changes.
+Change the backend so that new numbers are saved to the database.
+
+Change the backend so that deleting phonebook entries is reflected in the database.

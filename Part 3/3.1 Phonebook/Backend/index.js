@@ -54,11 +54,16 @@ app.get('/api/info', (request, response) => {
 })
 
 // delete
-app.delete('/api/persons/:id', (request, response) => {
-  const id = Number(request.params.id)
-  persons = persons.filter(person => person.id !== id)
+app.delete('/api/persons/:id', (request, response, next) => {
 
-  response.status(204).end()
+  Person.findByIdAndDelete(request.params.id)
+  .then(result => {
+    console.log(`-> Removing ${result.name}`);
+    response.json(result)
+    response.status(204).end()
+  })
+  .catch(error => next(error))
+
 })
 
 // create
@@ -83,7 +88,7 @@ app.post('/api/persons', (request, response) => {
       number: body.number,
     })
     
-    console.log(`Adding ${newPerson.name}`);
+    console.log(`-> Adding ${newPerson.name}`);
     newPerson.save().then(savedPerson => {
       response.json(savedPerson)
     })
