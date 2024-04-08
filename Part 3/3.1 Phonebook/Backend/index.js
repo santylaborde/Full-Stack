@@ -7,28 +7,32 @@ const Person = require('./models/person') // mongo db
 let persons= []
 
 /*** MIDDLEWARE ***/
+const unknownEndpoint = (request, response) => {
+  response.status(404).send({ error: 'unknown endpoint' })
+}
+
+const errorHandler = (error, request, response, next) => {
+  console.error(error.message)
+
+  if (error.name === 'CastError') {
+    return response.status(400).send({ error: 'malformatted id' })
+  } 
+
+  next(error)
+}
+
 // json-parser
 app.use(express.json())
 // morgan
 var morgan = require('morgan')
-// tiny morgan
-// app.use(morgan('tiny'))
-// custom morgan
-morgan.token('body', (req, res) => JSON.stringify(req.body));
+// app.use(morgan('tiny')) // tiny morgan
+morgan.token('body', (req, res) => JSON.stringify(req.body)); // custom morgan
 app.use(morgan(':method :url :status :req[content-length] - :response-time ms :body'))
 // same origin policy 
 const cors = require('cors')
 app.use(cors())
 // prod frontend
 app.use(express.static('dist'))
-
-/*** FUNCTIONS ***/
-// id generator
-const generateId = () => {
-  const max= 10000
-  const randId = Math.floor(Math.random() * max);
-  return randId
-}
 
 /*** API ***/
 // get all
@@ -100,6 +104,11 @@ app.post('/api/persons', (request, response) => {
     })
   }
 })
+
+// handler of requests with unknown endpoint
+app.use(unknownEndpoint)
+// handler of requests with result to errors
+app.use(errorHandler)
 
 /*** MAIN ***/
 const PORT= process.env.PORT || 3001
