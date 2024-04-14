@@ -57,3 +57,13 @@ If the user tries to create a new phonebook entry for a person whose name is alr
 Update the handling of the api/persons/:id and info routes to use the database, and verify that they work directly with the browser, Postman, or VS Code REST client.
 
 Expand the validation so that the name stored in the database has to be at least three characters long.
+
+Add validation to your phonebook application, which will make sure that phone numbers are of the correct form. A phone number must:
+- have length of 8 or more
+- be formed of two parts that are separated by -, the first part has two or three numbers and the second part also consists of numbers
+
+Examples:
+- eg. 09-1234556 and 040-22334455 are valid phone numbers
+- eg. 1234556, 1-22334455 and 10-22-334455 are invalid
+
+If an HTTP POST request tries to add a person with an invalid phone number, the server should respond with an appropriate status code and error message.

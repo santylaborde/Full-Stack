@@ -23,8 +23,21 @@ const personSchema = new mongoose.Schema({
     minLength: 3,
     required: true
   },
-  number: String,
+  number: {
+    type: String,
+    minLength: 9, // the task asks for 8 numbers (but we have also the "-" character)
+    required: true,
+    validate: [numberValidator, 'Number must be formed of two parts that are separated by -, the first part has two or three numbers and the second part also consists of numbers']
+  },
 })
+
+// function that validates the phone number format
+function numberValidator(number) {
+
+  const regex = new RegExp('^[0-9]{2,3}-{1}[0-9]+$');
+  
+  return regex.test(number)
+}
 
 // Schema transform
 personSchema.set('toJSON', {
