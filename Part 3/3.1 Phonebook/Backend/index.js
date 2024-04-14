@@ -30,9 +30,9 @@ app.use(express.json())
 // morgan
 var morgan = require('morgan')
 // app.use(morgan('tiny')) // tiny morgan
-morgan.token('body', (req, res) => JSON.stringify(req.body)); // custom morgan
+morgan.token('body', (req) => JSON.stringify(req.body)) // custom morgan
 app.use(morgan(':method :url :status :req[content-length] - :response-time ms :body'))
-// same origin policy 
+// same origin policy
 const cors = require('cors')
 app.use(cors())
 // prod frontend
@@ -49,31 +49,31 @@ app.get('/api/persons', (request, response) => {
 // get singular
 app.get('/api/persons/:id', (request, response, next) => {
   Person.findById(request.params.id)
-  .then(note => {
-    if (note) { response.json(note) } 
-    else {  response.status(404).end() }
-  })
-  .catch(error => next(error))
+    .then(note => {
+      if (note) { response.json(note) }
+      else {  response.status(404).end() }
+    })
+    .catch(error => next(error))
 })
 
 // get info
 app.get('/api/info', (request, response) => {
   const date = new Date(Date.now())
-  Person.find({}).then(persons => {    
+  Person.find({}).then(persons => {
     response.send(`<p>Phonebook has info for ${persons.length} people</p> <p>${date}</p>`)
-  })  
+  })
 })
 
 // delete
 app.delete('/api/persons/:id', (request, response, next) => {
 
   Person.findByIdAndDelete(request.params.id)
-  .then(result => {
-    console.log(`-> Removing ${result.name}`);
-    response.json(result)
-    response.status(204).end()
-  })
-  .catch(error => next(error))
+    .then(result => {
+      console.log(`-> Removing ${result.name}`)
+      response.json(result)
+      response.status(204).end()
+    })
+    .catch(error => next(error))
 
 })
 
@@ -81,15 +81,15 @@ app.delete('/api/persons/:id', (request, response, next) => {
 app.post('/api/persons', (request, response, next) => {
   const body = request.body
 
-  // Check duplicated person    
+  // Check duplicated person
   if (!persons.find(p => p.name === body.name)) {
     // Not yet on the phonebook
     const newPerson = new Person({
       name: body.name,
       number: body.number,
     })
-    
-    console.log(`-> Adding ${newPerson.name}`);
+
+    console.log(`-> Adding ${newPerson.name}`)
     newPerson.save()
       .then(savedPerson => {
         response.json(savedPerson)
@@ -97,9 +97,9 @@ app.post('/api/persons', (request, response, next) => {
       .catch(error => next(error))
   }
   else {
-    console.log("name is duplicated");
-    return response.status(400).json({ 
-      error: 'name is duplicated' 
+    console.log('name is duplicated')
+    return response.status(400).json({
+      error: 'name is duplicated'
     })
   }
 })
@@ -109,8 +109,8 @@ app.put('/api/persons/:id', (request, response, next) => {
   const { name, number } = request.body
 
   Person.findByIdAndUpdate(
-    request.params.id, 
-    { name, number }, 
+    request.params.id,
+    { name, number },
     { new: true, runValidators: true, context: 'query' })
     .then(updatedPerson => {
       response.json(updatedPerson)
@@ -126,5 +126,5 @@ app.use(errorHandler)
 /*** MAIN ***/
 const PORT= process.env.PORT || 3001
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`)
+  console.log(`Server running on port ${PORT}`)
 })

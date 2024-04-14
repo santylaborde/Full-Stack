@@ -7,14 +7,14 @@ const url = process.env.MONGODB_URI
 console.log('connecting to', url)
 
 mongoose.connect(url)
-.then(result => {
-  console.log('connected to MongoDB')
-  console.log('--------------------')
-})
-.catch((error) => {
-  console.log('error connecting to MongoDB:', error.message)
-  console.log('--------------------')
-})
+  .then(() => {
+    console.log('connected to MongoDB')
+    console.log('--------------------')
+  })
+  .catch((error) => {
+    console.log('error connecting to MongoDB:', error.message)
+    console.log('--------------------')
+  })
 
 // Schema define
 const personSchema = new mongoose.Schema({
@@ -34,8 +34,8 @@ const personSchema = new mongoose.Schema({
 // function that validates the phone number format
 function numberValidator(number) {
 
-  const regex = new RegExp('^[0-9]{2,3}-{1}[0-9]+$');
-  
+  const regex = new RegExp('^[0-9]{2,3}-{1}[0-9]+$')
+
   return regex.test(number)
 }
 

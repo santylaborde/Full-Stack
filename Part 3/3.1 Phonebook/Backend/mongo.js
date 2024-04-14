@@ -5,7 +5,7 @@ if (process.argv.length<3) {
   process.exit(1)
 }
 
-const app= "phoneBook"
+const app= 'phoneBook'
 const password = process.argv[2]
 
 const url =
@@ -25,22 +25,22 @@ const number= process.argv[4]
 
 if(process.argv[3]) // CREATE
 {
-  console.log("Creating contact");
+  console.log('Creating contact')
 
   const person = new Person({
     name: name,
     number: number
-  })  
-  
+  })
+
   // Create new person
-  person.save().then(result => {
+  person.save().then(() => {
     console.log(`added ${name} number ${number} to phonebook`)
     mongoose.connection.close()
   })
 }
 else // GET
 {
-  console.log("Phonebook:");
+  console.log('Phonebook:')
   // get persons
   Person.find({}).then(result => {
     result.forEach(person => {

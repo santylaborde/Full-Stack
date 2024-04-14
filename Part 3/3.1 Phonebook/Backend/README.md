@@ -67,3 +67,5 @@ Examples:
 - eg. 1234556, 1-22334455 and 10-22-334455 are invalid
 
 If an HTTP POST request tries to add a person with an invalid phone number, the server should respond with an appropriate status code and error message.
+
+Add ESlint to your application and fix all the warnings.
