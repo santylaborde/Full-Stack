@@ -21,7 +21,7 @@ const likes= process.argv[5]
 
 if(process.argv[3]) // CREATE
 {
-  console.log('Creating blog entry')
+  logger.info('Creating blog entry')
 
   const blog = new Blog({
     title: title,
@@ -32,17 +32,17 @@ if(process.argv[3]) // CREATE
 
   // Create new person
   blog.save().then(() => {
-    console.log(`added ${title} to bloglist`)
+    logger.info(`added ${title} to bloglist`)
     mongoose.connection.close()
   })
 }
 else // GET
 {
-  console.log('Bloglist:')
+  logger.info('Bloglist:')
   // get blogs
   Blog.find({}).then(result => {
     result.forEach(blog => {
-      console.log(`${blog.title} - ${blog.author}`)
+      logger.info(`${blog.title} - ${blog.author}`)
     })
     mongoose.connection.close()
   })
