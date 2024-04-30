@@ -3,7 +3,7 @@ const assert = require('node:assert')
 
 const listHelper = require('../utils/list_helper')
 
-describe('total likes', () => {
+describe('favorite blog', () => {
   const listWithBlogs = [
     {
       "title": "React patterns",
@@ -43,8 +43,8 @@ describe('total likes', () => {
     }
   ]
 
-  test('list has multiple blogs, the total likes of that', () => {
-    const result = listHelper.totalLikes(listWithBlogs)
-    assert.strictEqual(result, 36)
+  test('Most liked blog from the list of blogs', () => {
+    const result = listHelper.favoriteBlog(listWithBlogs)
+    assert.deepStrictEqual(result, listWithBlogs[2])
   })
 })

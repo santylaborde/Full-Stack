@@ -13,3 +13,5 @@ First, define a dummy function that receives an array of blog posts as a paramet
 Verify that your test configuration works.
 
 Define a new totalLikes function that receives a list of blog posts as a parameter. The function returns the total sum of likes in all of the blog posts.
+
+Define a new favoriteBlog function that receives a list of blogs as a parameter. The function finds out which blog has the most likes. If there are many top favorites, it is enough to return one of them.
