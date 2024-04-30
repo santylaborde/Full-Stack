@@ -9,4 +9,7 @@ Refactor the application into separate modules as shown earlier in this part of 
 
 
 ### Helper Functions and Unit Tests
-First, define a dummy function that receives an array of blog posts as a parameter and always returns the value 1. Verify that your test configuration works.
+First, define a dummy function that receives an array of blog posts as a parameter and always returns the value.
+Verify that your test configuration works.
+
+Define a new totalLikes function that receives a list of blog posts as a parameter. The function returns the total sum of likes in all of the blog posts.
