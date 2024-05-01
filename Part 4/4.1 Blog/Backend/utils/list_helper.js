@@ -19,8 +19,19 @@ const favoriteBlog = blogs => {
   return favorite
 }
 
+const mostBlogs = blogs => {
+  
+  const _ = require('lodash');
+
+  const authorArray= blogs.map(blog => blog.author)
+  authorMostBlogs= _.chain(authorArray).countBy().toPairs().maxBy(_.last).head().value(); //find the most commonly occurring tag value
+  return {author: authorMostBlogs, blogs: authorArray.filter(author => author===authorMostBlogs).length}
+}
+
+
 module.exports = {
   dummy,
   totalLikes,
-  favoriteBlog
+  favoriteBlog,
+  mostBlogs
 }
