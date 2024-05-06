@@ -21,3 +21,6 @@ The database is cleared out at the beginning, and after that, we save the two no
 - Async/Await
 Replace the .then()/.catch() structure with async and await.
 You should used try/catch for the exceptions catching.
+
+Replace the try/catch structure using express-async-errors library.
+The library handles everything under the hood. If an exception occurs in an async route, the execution is automatically passed to the error-handling middleware.
