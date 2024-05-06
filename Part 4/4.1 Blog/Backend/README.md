@@ -19,3 +19,6 @@ Define a new favoriteBlog function that receives a list of blogs as a parameter.
 Define a function called mostBlogs that receives an array of blogs as a parameter. The function returns the author who has the largest amount of blogs. The return value also contains the number of blogs the top author has. This exercise is a great opportunity to learn how to use the Lodash library.
 
 Define a function called mostLikes that receives an array of blogs as its parameter. The function returns the author, whose blog posts have the largest amount of likes. The return value also contains the total number of likes that the author has received
+
+### Backend Tests
+Use the SuperTest library for writing a test that makes an HTTP GET request to the /api/blogs URL. Verify that the blog list application returns the correct amount of blog posts in the JSON format.
