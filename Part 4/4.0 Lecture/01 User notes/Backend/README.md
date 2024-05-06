@@ -14,3 +14,6 @@ The convention in Node is to define the execution mode of the application with t
 
 - supertest
 Let's use the supertest package to help us write our tests for testing the API.
+
+- db initialization
+The database is cleared out at the beginning, and after that, we save the two notes stored in the initialNotes array to the database. By doing this, we ensure that the database is in the same state before every test is run.
