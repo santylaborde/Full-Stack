@@ -11,3 +11,6 @@ Let's start our testing journey by looking at unit tests. The logic of our appli
 
 - Adding test environment
 The convention in Node is to define the execution mode of the application with the NODE_ENV environment variable.
+
+- supertest
+Let's use the supertest package to help us write our tests for testing the API.
