@@ -8,3 +8,6 @@ The contents of the index.js file used for starting the application gets simplif
 The different code have been moved into a dedicated modules.
 
 Let's start our testing journey by looking at unit tests. The logic of our application is so simple, that there is not much that makes sense to test with unit tests.
+
+- Adding test environment
+The convention in Node is to define the execution mode of the application with the NODE_ENV environment variable.
