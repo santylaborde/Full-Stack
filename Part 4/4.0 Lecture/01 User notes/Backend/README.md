@@ -17,3 +17,7 @@ Let's use the supertest package to help us write our tests for testing the API.
 
 - db initialization
 The database is cleared out at the beginning, and after that, we save the two notes stored in the initialNotes array to the database. By doing this, we ensure that the database is in the same state before every test is run.
+
+- Async/Await
+Replace the .then()/.catch() structure with async and await.
+You should used try/catch for the exceptions catching.
