@@ -28,7 +28,23 @@ test('blogs are returned as json', async () => {
     .expect(200)
     .expect('Content-Type', /application\/json/) // regex
 
-    assert.strictEqual(response.body.length, helper.initialBlogs.length)
+  assert.strictEqual(response.body.length, helper.initialBlogs.length)
+})
+
+test.only('blogs unique identifier property is named id', async() => {
+  // We get the original blogs
+  const blogsAtStart = await helper.blogsInDb()
+
+  // We check each blog in the list has an ID
+  for (let blog of blogsAtStart) {
+
+    const resultBlog = await api      
+      .get(`/api/blogs/${blog.id}`)
+      .expect(200)
+      .expect('Content-Type', /application\/json/)
+
+    assert.deepStrictEqual(resultBlog.body, blog)
+  }
 })
 
 after(async () => {
