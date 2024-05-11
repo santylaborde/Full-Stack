@@ -8,6 +8,7 @@ const api = supertest(app)
 
 const helper = require('./test_helper')
 const Blog = require('../models/blog')
+const { forEach } = require('lodash')
 
 //* Initializing the database before tests
 beforeEach(async () => {
@@ -31,7 +32,7 @@ test('blogs are returned as json', async () => {
   assert.strictEqual(response.body.length, helper.initialBlogs.length)
 })
 
-test.only('blogs unique identifier property is named id', async() => {
+test('blogs unique identifier property is named id', async() => {
   // We get the original blogs
   const blogsAtStart = await helper.blogsInDb()
 
@@ -45,6 +46,30 @@ test.only('blogs unique identifier property is named id', async() => {
 
     assert.deepStrictEqual(resultBlog.body, blog)
   }
+})
+
+test.only('a valid blog can be added ', async () => {
+  
+  const newBlog = {
+    "title": "Best grills for eating asado in Argentina",
+    "author": "Luisito Comunica",
+    "url": "https://luisito_in_argentina.com/",
+    "likes": 14
+  }
+
+  await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(201)
+    .expect('Content-Type', /application\/json/)
+
+  // verify the total number of blogs
+  const blogsAtEnd = await helper.blogsInDb()
+  assert.strictEqual(blogsAtEnd.length, helper.initialBlogs.length + 1)
+
+  // verify the content of blogs
+  const resultBlog= blogsAtEnd.filter(blog => blog.title === newBlog.title)
+  Object.keys(newBlog).forEach(key => assert.deepStrictEqual(resultBlog[0][key], newBlog[key]))
 })
 
 after(async () => {

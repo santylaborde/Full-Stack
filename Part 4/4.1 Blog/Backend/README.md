@@ -24,3 +24,5 @@ Define a function called mostLikes that receives an array of blogs as its parame
 Use the SuperTest library for writing a test that makes an HTTP GET request to the /api/blogs URL. Verify that the blog list application returns the correct amount of blog posts in the JSON format.
 
 Write a test that verifies that the unique identifier property of the blog posts is named id, by default the database names the property _id.
+
+Write a test that verifies that making an HTTP POST request to the /api/blogs URL successfully creates a new blog post. At the very least, verify that the total number of blogs in the system is increased by one. You can also verify that the content of the blog post is saved correctly to the database.
