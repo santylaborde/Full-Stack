@@ -72,7 +72,7 @@ test('a valid blog can be added ', async () => {
   Object.keys(newBlog).forEach(key => assert.deepStrictEqual(resultBlog[0][key], newBlog[key]))
 })
 
-test.only('0 likes if the property is missing', async () => {
+test('0 likes if the property is missing', async () => {
   
   const newBlog = {
     "title": "Best grills for eating asado in Argentina",
@@ -94,6 +94,54 @@ test.only('0 likes if the property is missing', async () => {
   // verify the likes of blogs
   const resultBlog= blogsAtEnd.filter(blog => blog.title === newBlog.title)
   assert.strictEqual(resultBlog[0]["likes"], 0)
+})
+
+test('blog with no title, not added', async () => {
+  
+  // Missing title
+  const newBlog = {
+    "author": "Luisito Comunica",
+    "url": "https://luisito_in_argentina.com/",
+    "likes": 10
+  }
+
+  await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(400)
+    .expect('Content-Type', /application\/json/)
+
+  // verify there is not new blog in the blog list
+  const blogsAtEnd = await helper.blogsInDb()
+  assert.strictEqual(blogsAtEnd.length, helper.initialBlogs.length)
+
+  // The not added is not in the blog list
+  const urls = blogsAtEnd.map(r => r.url)
+  assert(!urls.includes(newBlog.url))
+})
+
+test('blog with no url, not added', async () => {
+  
+  // Missing url
+  const newBlog = {
+    "title": "Best grills for eating asado in Argentina",
+    "author": "Luisito Comunica",
+    "likes": 10
+  }
+
+  await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(400)
+    .expect('Content-Type', /application\/json/)
+
+  // verify there is not new blog in the blog list
+  const blogsAtEnd = await helper.blogsInDb()
+  assert.strictEqual(blogsAtEnd.length, helper.initialBlogs.length)
+
+  // The not added is not in the blog list
+  const titles = blogsAtEnd.map(r => r.title)
+  assert(!titles.includes(newBlog.title))
 })
 
 after(async () => {
