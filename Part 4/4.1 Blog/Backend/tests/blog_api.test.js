@@ -48,7 +48,7 @@ test('blogs unique identifier property is named id', async() => {
   }
 })
 
-test.only('a valid blog can be added ', async () => {
+test('a valid blog can be added ', async () => {
   
   const newBlog = {
     "title": "Best grills for eating asado in Argentina",
@@ -70,6 +70,30 @@ test.only('a valid blog can be added ', async () => {
   // verify the content of blogs
   const resultBlog= blogsAtEnd.filter(blog => blog.title === newBlog.title)
   Object.keys(newBlog).forEach(key => assert.deepStrictEqual(resultBlog[0][key], newBlog[key]))
+})
+
+test.only('0 likes if the property is missing', async () => {
+  
+  const newBlog = {
+    "title": "Best grills for eating asado in Argentina",
+    "author": "Luisito Comunica",
+    "url": "https://luisito_in_argentina.com/",
+    // "likes": 10
+  }
+
+  await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(201)
+    .expect('Content-Type', /application\/json/)
+
+  // verify the total number of blogs
+  const blogsAtEnd = await helper.blogsInDb()
+  assert.strictEqual(blogsAtEnd.length, helper.initialBlogs.length + 1)
+
+  // verify the likes of blogs
+  const resultBlog= blogsAtEnd.filter(blog => blog.title === newBlog.title)
+  assert.strictEqual(resultBlog[0]["likes"], 0)
 })
 
 after(async () => {
